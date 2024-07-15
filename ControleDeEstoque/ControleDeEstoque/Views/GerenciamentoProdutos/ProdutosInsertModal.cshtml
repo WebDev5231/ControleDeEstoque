@@ -1,0 +1,77 @@
+﻿@model ControleDeEstoque.Model.Produtos
+
+<style type="text/css">
+    .modal-body .form-group label {
+        font-weight: bold;
+    }
+</style>
+
+<div class="modal fade" id="adicionarProdutoModal" tabindex="-1" aria-labelledby="adicionarProdutoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="adicionarProdutoModalLabel">Adicionar Produto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("AdicionarProduto", "GerenciamentoProdutos", FormMethod.Post, new { id = "adicionarProdutoForm" }))
+                {
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="Nome">Nome</label>
+                                @Html.TextBoxFor(m => m.Nome, "", new { @class = "form-control", id = "Nome" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="Descricao">Descrição</label>
+                                @Html.TextBoxFor(m => m.Descricao, "", new { @class = "form-control", id = "Descricao" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="PrecoCompra">Preço de Compra</label>
+                                @Html.TextBoxFor(m => m.PrecoCompra, "", new { @class = "form-control", id = "PrecoCompra" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="PrecoVenda">Preço de Venda</label>
+                                @Html.TextBoxFor(m => m.PrecoVenda, "", new { @class = "form-control", id = "PrecoVenda" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="QuantidadeEstoque">Quantidade</label>
+                                @Html.TextBoxFor(m => m.QuantidadeEstoque, "", new { @class = "form-control", id = "QuantidadeEstoque" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="DataValidade">Validade</label>
+                                @Html.TextBoxFor(m => m.DataValidade, "", new { @class = "form-control", id = "DataValidade", type = "date" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="Categoria">Categoria</label>
+                                @Html.TextBoxFor(m => m.Categoria, "", new { @class = "form-control", id = "Categoria" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

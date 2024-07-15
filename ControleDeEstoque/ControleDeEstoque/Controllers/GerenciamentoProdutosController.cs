@@ -10,49 +10,57 @@ namespace ControleDeEstoque.Controllers
     {
         public ActionResult GerenciamentoProdutos()
         {
-            // Criação de três produtos fictícios
-            var produtos = new List<Produtos>
-            {
-                new Produtos
-                {
-                    Id = 1,
-                    Nome = "Produto A",
-                    Descricao = "Descrição do Produto A",
-                    CodigoBarras = "1234567890123",
-                    PrecoCompra = 10.00m,
-                    PrecoVenda = 15.00m,
-                    QuantidadeEstoque = 50,
-                    DataValidade = new DateTime(2024, 12, 31),
-                    Categoria = "Categoria 1",
-                },
-                new Produtos
-                {
-                    Id = 2,
-                    Nome = "Produto B",
-                    Descricao = "Descrição do Produto B",
-                    CodigoBarras = "1234567890124",
-                    PrecoCompra = 20.00m,
-                    PrecoVenda = 30.00m,
-                    QuantidadeEstoque = 100,
-                    DataValidade = new DateTime(2024, 11, 30),
-                    Categoria = "Categoria 2",
-                },
-                new Produtos
-                {
-                    Id = 3,
-                    Nome = "Produto C",
-                    Descricao = "Descrição do Produto C",
-                    CodigoBarras = "1234567890125",
-                    PrecoCompra = 5.00m,
-                    PrecoVenda = 10.00m,
-                    QuantidadeEstoque = 200,
-                    DataValidade = new DateTime(2024, 10, 31),
-                    Categoria = "Categoria 3",
-                }
-            };
+            GetProdutos();
 
-            // Passar a lista de produtos para a view
-            return View(produtos);
+            return View();
+        }
+
+        private void GetProdutos()
+        {
+            var buscarProdutos = new ProdutosBusiness();
+
+            try
+            {
+                var produtos = buscarProdutos.GetProdutosGerenciamento();
+
+                if (produtos == null)
+                {
+                    TempData["ErrorMessage"] = "Não foi possível obter os dados";
+                }
+                else
+                {
+                    ViewBag.ProdutosResgatados = produtos;
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Não foi possível localizar os produtos: " + ex.Message;
+            }
+        }
+
+        [HttpPost]
+        public ActionResult AdicionarProduto(Produtos produto)
+        {
+            if (ModelState.IsValid)
+            {
+                var produtosBusiness = new ProdutosBusiness();
+
+                try
+                {
+                    produtosBusiness.AdicionarProduto(produto);
+                    TempData["SuccessMessage"] = "Produto adicionado com sucesso!";
+                }
+                catch (Exception ex)
+                {
+                    TempData["ErrorMessage"] = "Erro ao adicionar o produto: " + ex.Message;
+                }
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Os dados do produto são inválidos.";
+            }
+
+            return RedirectToAction("GerenciamentoProdutos");
         }
     }
 }

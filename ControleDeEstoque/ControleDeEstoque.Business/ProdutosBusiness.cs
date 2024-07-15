@@ -60,5 +60,44 @@ namespace ControleDeEstoque.Business
             }
         }
 
+        public object GetProdutoPorId(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Produtos> GetProdutosGerenciamento()
+        {
+            var buscarProdutos = new OperacoesProdutoData();
+
+            try
+            {
+                var BuscarProdutos = buscarProdutos.GetProdutos();
+
+                if (buscarProdutos == null)
+                {
+                    Console.WriteLine("Produtos não encontrados");
+                    return new List<Produtos>();
+                }
+                else
+                {
+                    return BuscarProdutos;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Erro ao consultar os dados" + ex);
+                return new List<Produtos>();
+            }
+        }
+
+        public void AdicionarProduto(Produtos produto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ExcluirProduto(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
